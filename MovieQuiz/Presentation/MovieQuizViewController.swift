@@ -7,6 +7,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     @IBOutlet weak private var textLabel: UILabel!
     @IBOutlet weak private var imageView: UIImageView!
     @IBOutlet weak private var counterLabel: UILabel!
+    @IBOutlet weak private var yesButton: UIButton!
+    @IBOutlet weak private var noButton: UIButton!
+    @IBOutlet weak var questionTitleLabel: UILabel!
     
     private var currentQuestionIndex = 0
     private var correctAnswers = 0
@@ -14,18 +17,24 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     private var currentQuestion: QuizQuestion?
     private var questionFactory: QuestionFactoryProtocol?
     private var alertPresenter: AlertPresenterProtocol?
-    private var statisticService: StatisticService = StatisticServiceImplementation()
+    private var statisticService: StatisticService?
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+            .lightContent
+        }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        textLabel.font = UIFont(name:"YSDisplay-Bold", size: 23)
+        counterLabel.font = UIFont(name:"YSDisplay-Medium", size: 20)
+        yesButton.titleLabel?.font = UIFont(name:"YSDisplay-Medium", size: 20)
+        noButton.titleLabel?.font = UIFont(name:"YSDisplay-Medium", size: 20)
+        questionTitleLabel.font = UIFont(name:"YSDisplay-Medium", size: 20)
+        
         questionFactory = QuestionFactory(delegate: self)
-        
         questionFactory?.requestNextQuestion()
-        
         alertPresenter = AlertPresenter(delegate: self)
-        
         statisticService = StatisticServiceImplementation()
     }
     
@@ -37,6 +46,11 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         }
         
         currentQuestion = question
+        
+        // разблокировка кнопок ответа
+        noButton.isEnabled = true
+        yesButton.isEnabled = true
+        
         let viewModel = convert(model: question)
         DispatchQueue.main.async { [weak self] in
             self?.show(quiz: viewModel)
@@ -47,6 +61,11 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         guard let currentQuestion = currentQuestion else {
             return
         }
+        
+        // блокировка кнопок ответа
+        noButton.isEnabled = false
+        yesButton.isEnabled = false
+        
         let givenAnswer = false
         
         showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
@@ -55,6 +74,11 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         guard let currentQuestion = currentQuestion else {
             return
         }
+        
+        // блокировка кнопок ответа
+        noButton.isEnabled = false
+        yesButton.isEnabled = false
+        
         let givenAnswer = true
         
         showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
@@ -82,7 +106,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             message: result.text,
             preferredStyle: .alert)
         
-        let action = UIAlertAction(title: result.buttonText, style: .default) { _ in
+        let action = UIAlertAction(title: result.buttonText, style: .default) { [weak self] _ in
+            guard let self = self else { return }
             self.currentQuestionIndex = 0
             self.correctAnswers = 0
             self.questionFactory?.requestNextQuestion()
@@ -108,25 +133,37 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     }
     private func showNextQuestionOrResults() {
         if currentQuestionIndex == questionsAmount - 1 {
+            
+            guard let statisticService = statisticService else {
+                return
+            }
+            
             statisticService.store(correct: correctAnswers, total: questionsAmount)
             
             let bestGame = statisticService.bestGame
             let date = bestGame.date.dateTimeString
             let gamesCount = statisticService.gamesCount
             
-            let message = "Ваш результат: \(correctAnswers)/10\nКоличество сыгранных квизов: \(gamesCount)\nРекорд: \(bestGame.correct)/10 (\(date))\nСредняя точность: \(String(format: "%.2f", statisticService.totalAccuracy))%"
-            
-            let viewModel: AlertModel = AlertModel(title: "Этот раунд окончен!", message: message, buttonText: "Cыграть еще раз") {[weak self] _ in
-            guard let self = self else { return }
-                self.currentQuestionIndex = 0
-                self.correctAnswers = 0
-                self.questionFactory?.requestNextQuestion()
-            }
+            let message =   """
+                            Ваш результат: \(correctAnswers)/10
+                            Количество сыгранных квизов: \(gamesCount)
+                            Рекорд: \(bestGame.correct)/10 (\(date))
+                            Средняя точность: \(String(format: "%.2f", statisticService.totalAccuracy))%"
+                            """
+
+            let viewModel: AlertModel = AlertModel(
+                            title: "Этот раунд окончен!",
+                            message: message,
+                            buttonText: "Cыграть еще раз") {[weak self] _ in
+                                guard let self = self else { return }
+                                self.currentQuestionIndex = 0
+                                self.correctAnswers = 0
+                                self.questionFactory?.requestNextQuestion()
+                            }
             alertPresenter?.showAlert(quiz: viewModel)
                         
         }else{
             currentQuestionIndex += 1
-            
             questionFactory?.requestNextQuestion()
         }
     }
@@ -194,3 +231,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
      Ответ: НЕТ
      */
 }
+
+
+//for (NSString* fontFamily in [UIFont familyNames]) {
+//        NSLog(@"Font family: %@", fontFamily);
+//        NSLog(@"Fonts %@", [UIFont fontNamesForFamilyName:fontFamily]);
+//}

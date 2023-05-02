@@ -7,6 +7,6 @@
 
 import UIKit
 
-protocol AlertPresenterProtocol {
+protocol AlertPresenterProtocol: AnyObject {
     func showAlert (quiz result: AlertModel)
 }
