@@ -16,6 +16,10 @@
 		AD5EE5DE284D7887003966EF /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5EE5DD284D7887003966EF /* UIColor+Extensions.swift */; };
 		AD77F5742857F8810062FB14 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD77F5732857F8810062FB14 /* Date+Extensions.swift */; };
 		AD7AFA552836189F00399704 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7AFA542836189F00399704 /* Array+Extensions.swift */; };
+		E72118312A0405260040BF6D /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72118302A0405260040BF6D /* NetworkClient.swift */; };
+		E72118332A0406DB0040BF6D /* MostPopularMovies.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72118322A0406DB0040BF6D /* MostPopularMovies.swift */; };
+		E72118352A0407420040BF6D /* MoviesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72118342A0407420040BF6D /* MoviesLoader.swift */; };
+		E72118442A0452320040BF6D /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = E72118432A0452320040BF6D /* Reachability */; };
 		E76005A229EB3900001ED4D3 /* QuestionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76005A129EB3900001ED4D3 /* QuestionFactory.swift */; };
 		E76005A529EB3C98001ED4D3 /* QuizStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76005A429EB3C98001ED4D3 /* QuizStepViewModel.swift */; };
 		E76005A729EB3CA9001ED4D3 /* QuizResultsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76005A629EB3CA9001ED4D3 /* QuizResultsViewModel.swift */; };
@@ -44,6 +48,11 @@
 		AD7AFA542836189F00399704 /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		E707524029D207AB000D4ACC /* YS Display-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Medium.ttf"; sourceTree = "<group>"; };
 		E707524129D207AB000D4ACC /* YS Display-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Bold.ttf"; sourceTree = "<group>"; };
+		E72118302A0405260040BF6D /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
+		E72118322A0406DB0040BF6D /* MostPopularMovies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MostPopularMovies.swift; sourceTree = "<group>"; };
+		E72118342A0407420040BF6D /* MoviesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesLoader.swift; sourceTree = "<group>"; };
+		E721183E2A043C720040BF6D /* Reachability.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = "../../../Downloads/Reachability-master/Reachability.m"; sourceTree = "<group>"; };
+		E721183F2A043C720040BF6D /* Reachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = "../../../Downloads/Reachability-master/Reachability.h"; sourceTree = "<group>"; };
 		E76005A129EB3900001ED4D3 /* QuestionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionFactory.swift; sourceTree = "<group>"; };
 		E76005A429EB3C98001ED4D3 /* QuizStepViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizStepViewModel.swift; sourceTree = "<group>"; };
 		E76005A629EB3CA9001ED4D3 /* QuizResultsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizResultsViewModel.swift; sourceTree = "<group>"; };
@@ -61,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E72118442A0452320040BF6D /* Reachability in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +104,7 @@
 			children = (
 				AD1ABAB02831907B00B3E448 /* MovieQuiz */,
 				AD1ABAAF2831907B00B3E448 /* Products */,
+				E721183D2A043C720040BF6D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -138,6 +149,15 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		E721183D2A043C720040BF6D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E721183F2A043C720040BF6D /* Reachability.h */,
+				E721183E2A043C720040BF6D /* Reachability.m */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E76005A029EB387D001ED4D3 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -145,6 +165,8 @@
 				E76005AA29EDEE43001ED4D3 /* QuestionFactoryProtocol.swift */,
 				E76005AE29EED6F1001ED4D3 /* QuestionFactoryDelegate.swift */,
 				E76005B629FD30BA001ED4D3 /* StatisticService.swift */,
+				E72118302A0405260040BF6D /* NetworkClient.swift */,
+				E72118342A0407420040BF6D /* MoviesLoader.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -156,6 +178,7 @@
 				E76005A629EB3CA9001ED4D3 /* QuizResultsViewModel.swift */,
 				E76005A829EB3CBE001ED4D3 /* QuizQuestion.swift */,
 				E76005B029F196BD001ED4D3 /* AlertModel.swift */,
+				E72118322A0406DB0040BF6D /* MostPopularMovies.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -176,6 +199,9 @@
 			dependencies = (
 			);
 			name = MovieQuiz;
+			packageProductDependencies = (
+				E72118432A0452320040BF6D /* Reachability */,
+			);
 			productName = MovieQuiz;
 			productReference = AD1ABAAE2831907B00B3E448 /* MovieQuiz.app */;
 			productType = "com.apple.product-type.application";
@@ -205,6 +231,9 @@
 				Base,
 			);
 			mainGroup = AD1ABAA52831907B00B3E448;
+			packageReferences = (
+				E72118422A0452320040BF6D /* XCRemoteSwiftPackageReference "Reachability" */,
+			);
 			productRefGroup = AD1ABAAF2831907B00B3E448 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -237,17 +266,20 @@
 				AD5EE5DE284D7887003966EF /* UIColor+Extensions.swift in Sources */,
 				AD7AFA552836189F00399704 /* Array+Extensions.swift in Sources */,
 				E76005AB29EDEE43001ED4D3 /* QuestionFactoryProtocol.swift in Sources */,
+				E72118332A0406DB0040BF6D /* MostPopularMovies.swift in Sources */,
 				AD1ABAB62831907B00B3E448 /* MovieQuizViewController.swift in Sources */,
 				E76005B129F196BD001ED4D3 /* AlertModel.swift in Sources */,
 				E76005B329F1A13A001ED4D3 /* AlertPresenter.swift in Sources */,
 				E76005AF29EED6F1001ED4D3 /* QuestionFactoryDelegate.swift in Sources */,
 				E76005A529EB3C98001ED4D3 /* QuizStepViewModel.swift in Sources */,
+				E72118312A0405260040BF6D /* NetworkClient.swift in Sources */,
 				E76005A929EB3CBE001ED4D3 /* QuizQuestion.swift in Sources */,
 				E76005B529F1E30B001ED4D3 /* AlertPresenterProtocol.swift in Sources */,
 				E76005A229EB3900001ED4D3 /* QuestionFactory.swift in Sources */,
 				AD77F5742857F8810062FB14 /* Date+Extensions.swift in Sources */,
 				AD1ABAB22831907B00B3E448 /* AppDelegate.swift in Sources */,
 				E76005A729EB3CA9001ED4D3 /* QuizResultsViewModel.swift in Sources */,
+				E72118352A0407420040BF6D /* MoviesLoader.swift in Sources */,
 				AD1ABAB42831907B00B3E448 /* SceneDelegate.swift in Sources */,
 				E76005B729FD30BA001ED4D3 /* StatisticService.swift in Sources */,
 			);
@@ -473,6 +505,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E72118422A0452320040BF6D /* XCRemoteSwiftPackageReference "Reachability" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E72118432A0452320040BF6D /* Reachability */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E72118422A0452320040BF6D /* XCRemoteSwiftPackageReference "Reachability" */;
+			productName = Reachability;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AD1ABAA62831907B00B3E448 /* Project object */;
 }
