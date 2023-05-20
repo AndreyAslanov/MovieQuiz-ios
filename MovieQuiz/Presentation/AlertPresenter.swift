@@ -5,14 +5,16 @@
 //  Created by Андрей Асланов on 20.04.23.
 //
 
-import Foundation
 import UIKit
 
-class AlertPresenter: AlertPresenterProtocol {
-    weak var delegate: UIViewController?
-    init(delegate: UIViewController) {
-        self.delegate = delegate
+final class AlertPresenter: AlertPresenterProtocol {
+    private weak var viewController: UIViewController?
+    private var presenter: MovieQuizPresenter
+    init(viewController: UIViewController?, presenter: MovieQuizPresenter) {
+        self.viewController = viewController
+        self.presenter = presenter
     }
+
     func showAlert(quiz alertModel: AlertModel) {
         let alert = UIAlertController(
             title: alertModel.title,
@@ -20,7 +22,7 @@ class AlertPresenter: AlertPresenterProtocol {
             preferredStyle: .alert
         )
         
-        alert.view.accessibilityIdentifier = "Game results"
+//        alert.view.accessibilityIdentifier = "Game results"
         
         let action = UIAlertAction(
             title: alertModel.buttonText,
@@ -28,7 +30,7 @@ class AlertPresenter: AlertPresenterProtocol {
             handler: alertModel.completion
         )
         alert.addAction(action)
-        delegate?.present(alert, animated: true, completion: nil)
+        viewController?.present(alert, animated: true, completion: nil)
     }
     
 }
