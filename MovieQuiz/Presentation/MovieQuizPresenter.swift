@@ -17,6 +17,9 @@ protocol MovieQuizViewControllerProtocol: AnyObject {
     func hideLoadingIndicator()
 
     func showNetworkError(message: String)
+    
+    func enableButtons()
+    func disableButtons()
 }
 
 final class MovieQuizPresenter: QuestionFactoryDelegate {
@@ -57,10 +60,6 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         }
         currentQuestion = question
         
-//        // разблокировка кнопок ответа
-//        noButton.isEnabled = true
-//        yesButton.isEnabled = true
-        
         let viewModel = convert(model: question)
         DispatchQueue.main.async { [weak self] in
             self?.viewController?.show(quiz: viewModel)
@@ -79,15 +78,11 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         currentQuestionIndex == questionsAmount - 1
     }
     
-    func didAnswer(isCorrectAnswer: Bool) {
+    func updateCounter(isCorrectAnswer: Bool) {
         if isCorrectAnswer {
             correctAnswers += 1
         }
     }
-    
-//    func resetQuestionIndex() {                                 //можно убрать?
-//        currentQuestionIndex = 0
-//    }
     
     func switchToNextQuestion() {
         currentQuestionIndex += 1
@@ -96,18 +91,13 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     
     func noButtonClicked() {
         didAnswer(isYes: false)
+        updateCounter(isCorrectAnswer: false)
     }
-        
-        // блокировка кнопок ответа
-//        noButton.isEnabled = false
-//        yesButton.isEnabled = false
     
     func yesButtonClicked() {
         didAnswer(isYes: true)
+        updateCounter(isCorrectAnswer: true)
     }
-    // блокировка кнопок ответа
-//        noButton.isEnabled = false
-//        yesButton.isEnabled = false
 
     private func didAnswer(isYes: Bool) {
         guard let currentQuestion = currentQuestion else {
@@ -118,12 +108,9 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         
         proceedWithAnswer(isCorrect: givenAnswer == currentQuestion.correctAnswer)
     }
-        // блокировка кнопок ответа
-//        noButton.isEnabled = false
-//        yesButton.isEnabled = false
     
     private func proceedWithAnswer(isCorrect: Bool) {
-        didAnswer(isYes: true)
+        
         viewController?.highlightImageBorder(isCorrectAnswer: isCorrect)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
@@ -139,15 +126,10 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     }
     
     private func proceedToNextQuestionOrResults() {
-        //        showLoadingIndicator()                            //не знаю куда
         if self.isLastQuestion() {
-            let text = correctAnswers == self.questionsAmount ?
-            "Поздравляем, вы ответили на 10 из 10!" :
-            "Вы ответили на \(correctAnswers) из 10, попробуйте еще раз!"
-            
             let viewModel = QuizResultsViewModel(
                 title: "Этот раунд окончен!",
-                text: text,
+                text: makeResultMessage(),
                 buttonText: "Сыграть еще раз")
             
             let alertModel = AlertModel(
