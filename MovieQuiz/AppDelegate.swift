@@ -6,7 +6,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        print("Hello world for branch to merge")
+        print("Hello world")
+
         return true
     }
 
@@ -25,3 +26,4 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didDiscardSceneSessions sceneSessions: Set<UISceneSession>
     ) {}
 }
+

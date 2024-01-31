@@ -2,9 +2,27 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>YS Display-Medium.ttf</string>
+		<string>YS Display-Bold.ttf</string>
+	</array>
+	<key>CFBundleIdentifier</key>
+	<string></string>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<true/>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
+		<key>UIAppFonts</key>
+		<array>
+			<string>YS Display-Bold.ttf</string>
+			<string>YS Display-Medium.ttf</string>
+		</array>
 		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+		<key>UIApplicationSupportsTabbedSceneCollection</key>
 		<false/>
 		<key>UISceneConfigurations</key>
 		<dict>
